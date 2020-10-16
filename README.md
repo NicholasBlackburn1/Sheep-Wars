@@ -1,7 +1,7 @@
 # Sheep-Wars
 A Bedwars minigame Plugin Spinoff from hypixels Game For The HackerCraft Network 
 
-## This Game is for Spigot version 1.14.4
+**This Game is for Spigot version 1.14.4**
 
 ### Some Features  
 <li> Suppors Bungee Networks</li>
