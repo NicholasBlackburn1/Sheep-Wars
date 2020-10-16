@@ -23,13 +23,13 @@ repositories {
 }
 
 dependencies {
-    implementation spigot('1.14.2')
+    implementation spigot('1.15.2')
     implementation 'me.carleslc.Simple-YAML:Simple-Yaml:1.7.1'
 }
 
 spigot {
     // The 'name' and 'version' will be set to project.version and project.name, 
     // But we may set those manually.
-    name = 'Sheep Wars'
+    name = 'Sheep_Wars'
     version = '1.0.0'
 }

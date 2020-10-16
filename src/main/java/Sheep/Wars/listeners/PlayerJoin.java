@@ -22,7 +22,7 @@ public class PlayerJoin implements Listener{
     //Handles player joining the game
     @EventHandler
     public void playerJoin(PlayerJoinEvent event){
-
+        
     }
 
     // Handle Player Leaving the game 
@@ -37,19 +37,27 @@ public class PlayerJoin implements Listener{
 
     }
 
+    /**
+     * Handles Player Death to throw person into spectator
+     * @param event
+     * @param entity
+     */
     @EventHandler
-    public void playerDamage(EntityDamageEvent event, Entity entity){
-        entity = event.getEntity();
+    public void playerDamage(EntityDamageEvent event){
+        Entity entity = event.getEntity();
 
         if(entity instanceof Player) {
             Player player = (Player)entity;
             Main.log.warning(Main.loggerPreFix + "Players heath"+player.getHealth() +player.getName());
 
-            if(player.getHealth() < 2){
-                event.setCancelled(true);
+            if(player.getHealth() <= 2){
+                
                 player.setHealth(10);
                 player.setGameMode(GameMode.SPECTATOR);
                 Main.log.warning(Main.loggerPreFix+" "+player.getName() + " "+ player.getGameMode().toString());
+            }
+            else{
+                Main.log.warning(Main.loggerPreFix+" "+player.getName()+ "IS not dead but hurt\n");
             }
             
         }
