@@ -460,3 +460,5 @@ MigrationBackup/
 bin
 build
 *.log
+debug/
+bin/
