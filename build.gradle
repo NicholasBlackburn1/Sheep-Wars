@@ -19,10 +19,12 @@ repositories {
     // Use jcenter for resolving dependencies.
     // You can declare any Maven/Ivy/file repository here.
     jcenter()
+    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
-    compileOnly spigot('1.14.2')
+    implementation spigot('1.14.2')
+    implementation 'me.carleslc.Simple-YAML:Simple-Yaml:1.7.1'
 }
 
 spigot {
