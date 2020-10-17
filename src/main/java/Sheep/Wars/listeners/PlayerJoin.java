@@ -49,12 +49,13 @@ public class PlayerJoin implements Listener{
     @EventHandler
     public void playerLeaves(PlayerQuitEvent event){
         event.setQuitMessage(ChatColor.YELLOW + event.getPlayer().getName()+ChatColor.RED+"DISCONNECTED");
+        Main.log.warning(Main.loggerPreFix + " "+ event.getPlayer().getPlayerListName() + " " + "Dissconnected Game" + " " + "Has 10 sec to Rejoin");
     }
 
     // removes idle people from the game
     @EventHandler
     public void playerKick(PlayerKickEvent event){
-     
+     Bukkit.broadcastMessage( ChatColor.GREEN + event.getPlayer().getDisplayName()+ ChatColor.YELLOW +"Was Kicked for" + "  " + ChatColor.RED +event.getReason());
     }
 
     /**
@@ -63,7 +64,7 @@ public class PlayerJoin implements Listener{
      * @param entity
      */
     @EventHandler
-    public void playerDamage(EntityDamageEvent event){
+    public void playerDamage(EntityDamageByEntityEvent event){
         Entity entity = event.getEntity();
 
         if(entity instanceof Player) {
@@ -72,14 +73,11 @@ public class PlayerJoin implements Listener{
             Main.log.warning(Main.loggerPreFix + "Players heath"+player.getHealth() +player.getName());
 
             if(player.getHealth() <= 2.5){
-                Bukkit.broadcast(ChatColor.GREEN + player.getLastDamageCause().getEntity().getName() + ChatColor.YELLOW + "DeathMessage",null);
-                player.setHealth(10);
+                Bukkit.broadcastMessage(ChatColor.GREEN + player.getName() +"  "+ ChatColor.YELLOW + "DeathMessage" +"  "+ChatColor.RED + event.getDamager().getName());
+                player.setHealth(12);
                 player.setGameMode(GameMode.SPECTATOR);
                 Main.log.warning(Main.loggerPreFix+" "+player.getName() + " "+ player.getGameMode().toString());
             }
-            /*if(){ 
-                player.sendTitle(ChatColor.RED+"U Died".toUpperCase(), ChatColor.GREEN+"Respawn in" +" "+ 1);*/
-
             else{
                 Main.log.warning(Main.loggerPreFix+" "+player.getName()+ "IS not dead but hurt\n");
                 
