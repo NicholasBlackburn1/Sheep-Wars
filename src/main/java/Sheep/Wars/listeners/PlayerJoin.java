@@ -74,7 +74,10 @@ public class PlayerJoin implements Listener{
                 player.setHealth(10);
                 player.setGameMode(GameMode.SPECTATOR);
                 Main.log.warning(Main.loggerPreFix+" "+player.getName() + " "+ player.getGameMode().toString());
+            if(){ 
+                player.sendTitle(ChatColor.RED+"U Died".toUpperCase(), ChatColor.GREEN+"Respawn in" +" "+ 1);
             }
+            
             else{
                 Main.log.warning(Main.loggerPreFix+" "+player.getName()+ "IS not dead but hurt\n");
                 
