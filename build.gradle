@@ -24,7 +24,8 @@ repositories {
 
 dependencies {
     implementation spigot('1.15.2')
-    implementation 'me.carleslc.Simple-YAML:Simple-Yaml:1.7.1'
+    // https://mvnrepository.com/artifact/com.moandjiezana.toml/toml4j
+compile group: 'com.moandjiezana.toml', name: 'toml4j', version: '0.7.2'
 }
 
 spigot {

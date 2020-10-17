@@ -5,50 +5,51 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.simpleyaml.configuration.file.YamlFile;
+import com.moandjiezana.toml.Toml;
+import com.moandjiezana.toml.TomlWriter;
+
+import org.bukkit.Bukkit;
+import org.bukkit.configuration.InvalidConfigurationException;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.plugin.Plugin;
+
+
 import Sheep.Wars.*;
 
 /**
  * This class is for handling Config Creation
+ * 
  * @author nicholas Blackburn
  */
 public class ConfigHandler {
-   
-    private static Map<String,Double> WorldData = new HashMap<>();
+    
+    private static Map<String, Object> data = new HashMap<>();
     private int i;
 
     // This creates Yaml Config for Plugin
-    public void createConfig(){
-        YamlFile configYaml = new YamlFile(configFile);
-
-        if(!configYaml.exists()){
-
-        Main.log.warning(Main.loggerPreFix+ " Creating Config");
-
-        WorldData.put("x", 0.0);
-        WorldData.put("y", 0.0);
-        WorldData.put("z", 0.0);
+    
+    public void createConfig(File config) {
+        TomlWriter tomlWriter = new TomlWriter.Builder().build();
         
-        configYaml.setComment("Teams", "Team color Selection");
+        data.put("teams", 0);
 
-        configYaml.addDefault("Team1", "Red");
-        configYaml.addDefault("Team2", "Greem");
-        configYaml.addDefault("Team3", "blue");
-        configYaml.addDefault("Team4", "yello");
-        configYaml.addDefault("Team5", "orange");
-        configYaml.addDefault("Team6", "cyan");
+        data.put("lobbySpawnX",0);
+        data.put("lobbySpawnY",0);
+        data.put("lobbySpawnZ",0);
 
-        for(i=0; i<= 10; i++){
-            configYaml.createSection(Integer.toString(i), WorldData);
+        for(i=0; i<=Bukkit.getMaxPlayers(); i++){
+            data.put(i+"GameSpawnX",0);
+            data.put(i+"GameSpawnY",0);
+            data.put(i+"GameSpawnZ",0);
         }
-        // Finally, save changes!
+        Main.log.warning(Main.loggerPreFix + "MAp of Yoml "+ data.toString());    
         try {
-            configYaml.save();
-            // If your file has comments inside you have to save it with yamlFile.saveWithComments()
-        } catch (final IOException e) {
+            tomlWriter.write(data, config);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
             e.printStackTrace();
         }
-    }
     }
 
 }

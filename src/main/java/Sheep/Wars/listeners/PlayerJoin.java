@@ -31,16 +31,15 @@ public class PlayerJoin implements Listener{
     @EventHandler
     public void playerJoin(PlayerJoinEvent event){
 
-        if(Bukkit.getOnlinePlayers().toArray().length < Bukkit.getMaxPlayers()){
-
-        }
-
+        event.getPlayer().setGameMode(GameMode.SURVIVAL);
+        
+        //TODO: add the bukkit countdown & then arena setup
         if(Bukkit.getOnlinePlayers().toArray().length > Bukkit.getMaxPlayers()){
-
+            Main.log.info(Main.loggerPreFix + " Not Full YEt");
         }
 
         if(Bukkit.getOnlinePlayers().toArray().length == Bukkit.getMaxPlayers()){
-
+            Main.log.info(Main.loggerPreFix + " Starting...");
         }
 
     }
