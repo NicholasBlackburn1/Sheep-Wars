@@ -7,19 +7,24 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import Sheep.Wars.listeners.PlayerJoin;
+import Sheep.Wars.util.ConfigHandler;
 import kr.entree.spigradle.annotations.SpigotPlugin;
+
  
 @SpigotPlugin
 public class Main extends JavaPlugin{
-    public static Plugin plugin;
+    public static 
     public static Logger log = Bukkit.getLogger();
     public static String loggerPreFix = "[SheepWars]";
+    private ConfigHandler config = new ConfigHandler();
 
     
     // Runs When Plugin is Loading
     @Override
     public void onLoad(){
         log.severe(loggerPreFix+" IS LOADED\n");
+        config.createConfig();
+        
     }
 
     //Runs When Plugin is Enabled
