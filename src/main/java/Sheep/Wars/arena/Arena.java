@@ -6,6 +6,8 @@ import java.util.List;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
+import Sheep.Wars.Main;
+
 /** 
  * this class is for Creating the constructoe for our Arena for the miniGame.
  * @author Nicholas Blackbutn
@@ -19,7 +21,7 @@ public class Arena {
     private GameState state;
 
     enum GameState{
-        INGAME, STARTING, FINISHED;
+       SETUP, INGAME, STARTING, FINISHED;
     }
 
     public Arena(String name, Location spawnPoint){
@@ -38,7 +40,10 @@ public class Arena {
     }
 
     public void addPlayer(Player player) {
+        player.setHealth(20);
+        player.setFoodLevel(20);
         this.players.add(player);
+        Main.log.info(Main.loggerPreFix + " "+" Here is the Num of Players in The Arrena" + players.size());
     }
 
     public void removePlayer(Player player){
