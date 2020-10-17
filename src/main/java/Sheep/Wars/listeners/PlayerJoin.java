@@ -63,6 +63,7 @@ public class PlayerJoin implements Listener{
      * @param event
      * @param entity
      */
+    //TODO: add Check to see if the Sheep is still alive and not dead to see if players can respawn
     @EventHandler
     public void playerDamage(EntityDamageByEntityEvent event){
         Entity entity = event.getEntity();

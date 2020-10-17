@@ -3,6 +3,7 @@ package Sheep.Wars;
 import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import Sheep.Wars.listeners.PlayerJoin;
@@ -10,10 +11,10 @@ import kr.entree.spigradle.annotations.SpigotPlugin;
  
 @SpigotPlugin
 public class Main extends JavaPlugin{
-
+    public static Plugin plugin;
     public static Logger log = Bukkit.getLogger();
     public static String loggerPreFix = "[SheepWars]";
-    private PlayerJoin join = new PlayerJoin();
+
     
     // Runs When Plugin is Loading
     @Override
