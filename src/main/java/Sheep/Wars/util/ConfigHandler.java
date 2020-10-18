@@ -21,7 +21,9 @@ public class ConfigHandler {
     
     private Main plugin = Main.getPlugin(Main.class);
 
-    private Map<String,Double> map = new HashMap<>();
+    private Map<String,Double> spawnMap = new HashMap<>();
+    private Map<String,Double> lobbyspawnMap = new HashMap<>();
+    private Map<String,Object> gameMap = new HashMap<>();
 
     public FileConfiguration gamecfg;
     public FileConfiguration worldcfg;
@@ -75,21 +77,25 @@ public class ConfigHandler {
         worldFile.setWritable(true);
         worldFile.setReadable(true);
 
-        gameConfig.addDefault("database.user", "username");
-        gameConfig.addDefault("database.pass", "pass");
-        gameConfig.addDefault("database.ip", "ip");
-        gameConfig.addDefault("database.port", 0);
+       
 
-        worldConfig.addDefault("Lobby.X", 0);
-        worldConfig.addDefault("Lobby.Y", 0);
-        worldConfig.addDefault("Lobby.Z", 0);
+        lobbyspawnMap.put("X", 0.0);
+        lobbyspawnMap.put("Y", 0.0);
+        lobbyspawnMap.put("Z", 0.0);
 
-        map.put("Spawn.X", 0.0);
-        map.put("Spawn.Y", 0.0);
-        map.put("Spawn.Z", 0.0);
+        spawnMap.put("Spawn.X", 0.0);
+        spawnMap.put("Spawn.Y", 0.0);
+        spawnMap.put("Spawn.Z", 0.0);
+
+        gameMap.put("database.user", "username");
+        gameMap.put("database.pass", "pass");
+        gameMap.put("database.ip", "ip");
+        gameMap.put("database.port", 0);
 
         for(int i = 0; i<=plugin.getServer().getMaxPlayers(); i++){
-        worldConfig.createSection(Integer.toString(i), map);
+            worldConfig.createSection("Lobby",lobbyspawnMap);
+            worldConfig.createSection(Integer.toString(i), spawnMap);
+            gameConfig.createSection("Database",gameMap);
         }
         Main.log.warning(Main.loggerPreFix + " "+ " Added Default Config");
 
