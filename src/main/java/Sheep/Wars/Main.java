@@ -7,6 +7,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import Sheep.Wars.arena.ArenaManager;
 import Sheep.Wars.listeners.PlayerJoin;
 import Sheep.Wars.util.ConfigHandler;
 import kr.entree.spigradle.annotations.SpigotPlugin;
@@ -20,16 +21,13 @@ public class Main extends JavaPlugin{
     public static String loggerPreFix = "[SheepWars]";
     private File configToml = new File(getDataFolder()+"/config.toml");
     private ConfigHandler config;
+    private ArenaManager manager = new ArenaManager();
 
     // Runs When Plugin is Loading
     @Override
     public void onLoad() {
         log.severe(loggerPreFix + " IS LOADED\n");
-
-        if(!getDataFolder().exists()) {
-            getDataFolder().mkdirs(); // Creating the directory as it may not exist
-        }
-    
+        loadConfigManager();
     }
 
     // Runs When Plugin is Enabled
@@ -46,6 +44,10 @@ public class Main extends JavaPlugin{
         log.severe(loggerPreFix + " IS Diabled\n");
     }
 
+    public void loadConfigManager(){
+        config = new ConfigHandler();
+        config.createConfig();
+    }
     public static Main getInstance() {
         return instance;
     }

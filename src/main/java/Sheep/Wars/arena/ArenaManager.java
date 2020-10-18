@@ -1,5 +1,7 @@
 package Sheep.Wars.arena;
 
+import java.util.ArrayList;
+
 import com.moandjiezana.toml.Toml;
 
 import org.bukkit.Bukkit;
@@ -7,6 +9,7 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
+import Sheep.Wars.Main;
 import Sheep.Wars.arena.Arena.GameState;
 
 /**
@@ -16,21 +19,30 @@ import Sheep.Wars.arena.Arena.GameState;
 public class ArenaManager {
     
     private Arena arena;
-    private Toml toml = new Toml();
+    //private Main plugin = Main.getPlugin(Main.class);
+
+    private ArrayList<Arena> arenas = new ArrayList<>();
     private int i;
 
+
+    public ArenaManager(){
+        
+    }
     private void setPlayerSpawn(World world, Double x, Double y, Double z){
         Location location = new Location(world, x, y, z);
         arena = new Arena("Game", location);
     }
 
-    public void arenaSetup(){
+    // Sets up arena for Minigame
+    private void arenaSetup(){
+        Main.log.warning(Main.loggerPreFix + " "+ "Setting Up Arena");
         for (i = 0; i<= Bukkit.getMaxPlayers(); i++){
             arena.addPlayer((Player)Bukkit.getOnlinePlayers().stream());
-            setPlayerSpawn(Bukkit.getWorld("World"), toml.getDouble(i+"GameSpawnX"), toml.getDouble(i+"GameSpawnY"), toml.getDouble(i+"GameSpawnZ"));
+          //  setPlayerSpawn(Bukkit.getWorld("World"),, plugin..getDouble(i+"GameSpawnY"), toml.getDouble(i+"GameSpawnZ"));
 
         }
     }
+
 
 
 //TODO: Work out Switch and all the fucntions thar eun into 
@@ -49,6 +61,9 @@ public class ArenaManager {
                
                 break;
 
+            case DEATHMATCH:
+               
+                break;
             case FINISHED:
                
                 break;
@@ -56,3 +71,4 @@ public class ArenaManager {
                 break;
         }
     }
+}

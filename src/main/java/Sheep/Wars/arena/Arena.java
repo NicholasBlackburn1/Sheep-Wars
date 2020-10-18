@@ -21,7 +21,7 @@ public class Arena {
     private GameState state;
 
     enum GameState{
-       SETUP, INGAME, STARTING, FINISHED;
+       SETUP, STARTING, INGAME, DEATHMATCH, FINISHED;
     }
 
     public Arena(String name, Location spawnPoint){

@@ -5,15 +5,10 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.moandjiezana.toml.Toml;
-import com.moandjiezana.toml.TomlWriter;
 
 import org.bukkit.Bukkit;
-import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.plugin.Plugin;
-
 
 import Sheep.Wars.*;
 
@@ -24,32 +19,88 @@ import Sheep.Wars.*;
  */
 public class ConfigHandler {
     
-    private static Map<String, Object> data = new HashMap<>();
-    private int i;
+    private Main plugin = Main.getPlugin(Main.class);
 
-    // This creates Yaml Config for Plugin
+    private Map<String,Double> map = new HashMap<>();
+
+    public FileConfiguration gamecfg;
+    public FileConfiguration worldcfg;
+    public File gameFile= new File(plugin.getDataFolder(), "gameConfig.yml");
+    public File worldFile= new File(plugin.getDataFolder(), "worldConfig.yml");
     
-    public void createConfig(File config) {
-        TomlWriter tomlWriter = new TomlWriter.Builder().build();
-        
-        data.put("teams", 0);
 
-        data.put("lobbySpawnX",0);
-        data.put("lobbySpawnY",0);
-        data.put("lobbySpawnZ",0);
+    /// Creates file for config
+    public void createConfig() {
+       if(!plugin.getDataFolder().exists()){
+            plugin.getDataFolder().mkdir();
+       }
+       if(!gameFile.exists()){
+           try{
+               gamecfg = YamlConfiguration.loadConfiguration(gameFile);
+               worldcfg = YamlConfiguration.loadConfiguration(worldFile);
 
-        for(i=0; i<=Bukkit.getMaxPlayers(); i++){
-            data.put(i+"GameSpawnX",0);
-            data.put(i+"GameSpawnY",0);
-            data.put(i+"GameSpawnZ",0);
+               gameFile.createNewFile();
+               worldFile.createNewFile();
+               addDefaults(gamecfg,worldcfg);
+
+           } catch(IOException e){
+               Main.log.severe(Main.loggerPreFix + "" + " Could not Create File!");
+           }
+       }
+       gamecfg = YamlConfiguration.loadConfiguration(gameFile);
+       Main.log.warning(Main.loggerPreFix + " Config Loaded!");
+
+    }
+
+    public void saveConfig(){
+        try{
+            gamecfg.save(gameFile);
+        }catch(IOException e){
+            Main.log.severe(Main.loggerPreFix + " CANNOT SAVE FILE");
         }
-        Main.log.warning(Main.loggerPreFix + "MAp of Yoml "+ data.toString());    
+    }
+
+    public FileConfiguration getConfig(){
+        return gamecfg;
+    }
+    public FileConfiguration getWorldCofig(){
+        return worldcfg;
+    }
+
+    private void addDefaults(FileConfiguration gameConfig, FileConfiguration worldConfig){
+        Main.log.info(Main.loggerPreFix + " "+ " Adding Default Config");
+        
+        gameFile.setWritable(true);
+        gameFile.setReadable(true);
+        worldFile.setWritable(true);
+        worldFile.setReadable(true);
+
+        gameConfig.addDefault("database.user", "username");
+        gameConfig.addDefault("database.pass", "pass");
+        gameConfig.addDefault("database.ip", "ip");
+        gameConfig.addDefault("database.port", 0);
+
+        worldConfig.addDefault("Lobby.X", 0);
+        worldConfig.addDefault("Lobby.Y", 0);
+        worldConfig.addDefault("Lobby.Z", 0);
+
+        map.put("Spawn.X", 0.0);
+        map.put("Spawn.Y", 0.0);
+        map.put("Spawn.Z", 0.0);
+
+        for(int i = 0; i<=plugin.getServer().getMaxPlayers(); i++){
+        worldConfig.createSection(Integer.toString(i), map);
+        }
+        Main.log.warning(Main.loggerPreFix + " "+ " Added Default Config");
+
         try {
-            tomlWriter.write(data, config);
+            gameConfig.save(gameFile);
+            worldConfig.save(worldFile);
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+        
     }
 
 }
